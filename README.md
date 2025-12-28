@@ -6,12 +6,14 @@
 
 ## Function list
 -Suggest and discover place of interest, including interacting with map
--Request friend and chat with other user
--Planning and manage event
--Manage personal itinerary
--Interact with AI Chatbot
 
-## Installation Guide
+-Request friend and chat with other user
+
+-Planning and manage event
+
+-Manage personal itinerary
+
+-Interact with AI Chatbot
 
 ## Credit
 -This project is a teamwork effort of four members, these will be included as git username
