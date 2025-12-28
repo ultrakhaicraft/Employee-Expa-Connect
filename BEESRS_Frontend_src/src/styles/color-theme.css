@@ -1,0 +1,255 @@
+/* Global Color Theme for Beesrs Application */
+
+:root {
+  /* Primary Brand Colors */
+  --color-primary-from: #a855f7; /* purple-400 */
+  --color-primary-to: #60a5fa;   /* blue-400 */
+  --color-primary-from-hover: #9333ea; /* purple-500 */
+  --color-primary-to-hover: #3b82f6;   /* blue-500 */
+
+  /* Secondary Brand Colors */
+  --color-secondary-from: #f472b6; /* pink-400 */
+  --color-secondary-to: #a855f7;   /* purple-400 */
+  --color-secondary-from-hover: #ec4899; /* pink-500 */
+  --color-secondary-to-hover: #9333ea;   /* purple-500 */
+
+  /* Accent Colors */
+  --color-accent-from: #22d3ee; /* cyan-400 */
+  --color-accent-to: #60a5fa;   /* blue-400 */
+  --color-accent-from-hover: #06b6d4; /* cyan-500 */
+  --color-accent-to-hover: #3b82f6;   /* blue-500 */
+
+  /* Neutral Colors */
+  --color-bg-primary: #ffffff;   /* white */
+  --color-bg-secondary: #f9fafb; /* gray-50 */
+  --color-bg-tertiary: #f3f4f6;  /* gray-100 */
+  
+  --color-text-primary: #111827;   /* gray-900 */
+  --color-text-secondary: #6b7280; /* gray-500 */
+  --color-text-tertiary: #9ca3af;  /* gray-400 */
+  --color-text-muted: #d1d5db;     /* gray-300 */
+  
+  --color-border-primary: #e5e7eb;   /* gray-200 */
+  --color-border-secondary: #d1d5db; /* gray-300 */
+  --color-border-focus: #3b82f6;     /* blue-500 */
+
+  /* Status Colors */
+  --color-success: #10b981;   /* emerald-500 */
+  --color-success-light: #d1fae5; /* emerald-100 */
+  --color-warning: #f59e0b;   /* amber-500 */
+  --color-warning-light: #fef3c7; /* amber-100 */
+  --color-error: #ef4444;     /* red-500 */
+  --color-error-light: #fee2e2; /* red-100 */
+  --color-info: #3b82f6;      /* blue-500 */
+  --color-info-light: #dbeafe; /* blue-100 */
+
+  /* Interactive Colors */
+  --color-active-bg: #dbeafe; /* blue-100 */
+  --color-active-text: #1d4ed8; /* blue-700 */
+  --color-active-border: #3b82f6; /* blue-500 */
+  --color-hover-bg: #f3f4f6; /* gray-100 */
+  --color-hover-text: #374151; /* gray-700 */
+}
+
+/* Global Button Styles */
+.btn-primary {
+  background: linear-gradient(to right, var(--color-primary-from), var(--color-primary-to));
+  color: white;
+  border: none;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(to right, var(--color-primary-from-hover), var(--color-primary-to-hover));
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: linear-gradient(to right, var(--color-secondary-from), var(--color-secondary-to));
+  color: white;
+  border: none;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: linear-gradient(to right, var(--color-secondary-from-hover), var(--color-secondary-to-hover));
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.btn-accent {
+  background: linear-gradient(to right, var(--color-accent-from), var(--color-accent-to));
+  color: white;
+  border: none;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.btn-accent:hover {
+  background: linear-gradient(to right, var(--color-accent-from-hover), var(--color-accent-to-hover));
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+/* Global Input Styles */
+.input-default {
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-primary);
+  transition: all 0.3s ease;
+}
+
+.input-default:focus {
+  border-color: var(--color-border-focus);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Global Card Styles */
+.card-default {
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-border-primary);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.card-default:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.card-elevated {
+  background-color: var(--color-bg-primary);
+  border: 1px solid var(--color-border-primary);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.card-elevated:hover {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* Global Text Styles */
+.text-primary-gradient {
+  background: linear-gradient(to right, var(--color-primary-from), var(--color-primary-to));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-secondary-gradient {
+  background: linear-gradient(to right, var(--color-secondary-from), var(--color-secondary-to));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Global Status Styles */
+.status-success {
+  background-color: var(--color-success);
+  color: white;
+}
+
+.status-warning {
+  background-color: var(--color-warning);
+  color: white;
+}
+
+.status-error {
+  background-color: var(--color-error);
+  color: white;
+}
+
+.status-info {
+  background-color: var(--color-info);
+  color: white;
+}
+
+/* Global Interactive Styles */
+.interactive-active {
+  background-color: var(--color-active-bg);
+  color: var(--color-active-text);
+  border-color: var(--color-active-border);
+}
+
+.interactive-hover:hover {
+  background-color: var(--color-hover-bg);
+  color: var(--color-hover-text);
+}
+
+/* Global Animation Classes */
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.5s ease-out;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from { 
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to { 
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Global Focus Styles */
+.focus-ring:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Global Transition Classes */
+.transition-all {
+  transition: all 0.3s ease;
+}
+
+.transition-colors {
+  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.transition-transform {
+  transition: transform 0.3s ease;
+}
+
+/* Global Shadow Classes */
+.shadow-sm {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.shadow-md {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.shadow-xl {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+

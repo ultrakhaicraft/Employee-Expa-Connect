@@ -1,0 +1,391 @@
+import apiClient, { formatErrorMessage } from "../utils/axios";
+
+export const ViewUsers = async () => {
+    try {
+      const response = await apiClient.get("/api/AdminUsers");
+      if (!response || response.data === undefined || response.data === null) {
+        return [];
+      }
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+  
+export const UpdateUserToModerator = async (userId: string) => {
+    try {
+      const response = await apiClient.put(`/api/AdminUsers/${userId}/promote`);
+      if (!response || !response.data) {
+        throw new Error("Invalid response from the server");
+      }
+      return response.data;
+    } catch (error: any) {
+      const errorMessage = formatErrorMessage(error, "Failed to promote user to moderator");
+      const customError = new Error(errorMessage);
+      (customError as any).response = error.response;
+      throw customError;
+    }
+  };
+
+  export const CreateBranch = async (name: string, address: string, cityId: string, countryId: string, phoneNumber: string, email: string, establishedDate: string) => {
+    try {
+      const response = await apiClient.post("/api/Branches", { 
+        name, 
+        address, 
+        cityId, 
+        countryId, 
+        phoneNumber, 
+        email, 
+        establishedDate 
+      });
+      if (!response || !response.data) {
+        throw new Error("Invalid response from the server");
+      }
+      return response.data;
+    } catch (error: any) {
+      const errorMessage = formatErrorMessage(error, "Failed to create branch");
+      const customError = new Error(errorMessage);
+      (customError as any).response = error.response;
+      throw customError;
+    }
+  };
+
+  export const UpdateBranch = async (branchId: string, name: string, address: string, cityId: string, countryId: string, phoneNumber: string, email: string, establishedDate: string) => {
+    try {
+      const response = await apiClient.put("/api/Branches", { 
+        branchId, 
+        name, 
+        address, 
+        cityId, 
+        countryId, 
+        phoneNumber, 
+        email, 
+        establishedDate 
+      });
+      if (!response || !response.data) {
+        throw new Error("Invalid response from the server");
+      }
+      return response.data;
+    } catch (error: any) {
+      const errorMessage = formatErrorMessage(error, "Failed to update branch");
+      const customError = new Error(errorMessage);
+      (customError as any).response = error.response;
+      throw customError;
+    }
+  };
+
+  export const GetCountriesForBranch = async () => {
+    try {
+      const response = await apiClient.get("/api/Branches/get-countries");
+    if (!response || response.data === undefined || response.data === null) {
+      return [];
+    }
+    return response.data;
+    }
+    catch (error) {
+      throw error;
+    }
+  };
+
+  export const GetCitiesForBranch = async (countryId?: string) => {
+    try {
+      const query = countryId ? `?countryId=${countryId}` : "";
+      const response = await apiClient.get(`/api/Branches/get-cities${query}`);
+    if (!response || response.data === undefined || response.data === null) {
+      return [];
+    }
+    return response.data;
+    }
+    catch (error) {
+      throw error;
+    }
+  };
+
+  export const GetAllBranch = async (page: number = 1, pageSize: number = 10) => {
+    try {
+      const response = await apiClient.get(`/api/Branches/get-all?page=${page}&pageSize=${pageSize}`);
+    if (!response || response.data === undefined || response.data === null) {
+      return {
+        page,
+        pageSize,
+        totalItems: 0,
+        items: []
+      };
+    }
+    return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  export const SetBranchForUser = async (userId: string, branchId: string) => {
+    try {
+      const id = (userId || '').trim()
+      const bId = (branchId || '').trim()
+      const response = await apiClient.put(
+        `/api/Branches/save-user`,
+        {
+          saveToUserId: id,
+          branchId: bId,
+          currentBanchId: bId,
+        },
+        {
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+      if (!response || !response.data) {
+        throw new Error("Invalid response from the server");
+      }
+      return response.data;
+    } catch (error: any) {
+      const errorMessage = formatErrorMessage(error, "Failed to set branch for user");
+      const customError = new Error(errorMessage);
+      (customError as any).response = error.response;
+      throw customError;
+    }
+  };
+  
+export const CreateEmployeeCode = async (items: Array<{ employeeCode: string; branchId: string; email: string; jobTitle?: string; expiresAt: string; status?: string }>) => {
+    try {
+      // Convert expiresAt to ISO string, set status to null (backend will default to Inactive)
+      // EmployeeId will be auto-generated by backend
+      const processedItems = items.map(item => ({
+        employeeCode: item.employeeCode,
+        branchId: item.branchId,
+        email: item.email,
+        jobTitle: item.jobTitle || null,
+        expiresAt: item.expiresAt ? new Date(item.expiresAt).toISOString() : null,
+        status: null as number | null // Let backend set default to Inactive
+      }));
+      const response = await apiClient.post("/api/admin/employees/bulk", { items: processedItems });
+      if (!response || !response.data) {
+        throw new Error("Invalid response from the server");
+      }
+      return response.data;
+    } catch (error: any) {
+      const errorMessage = formatErrorMessage(error, "Failed to create employee code");
+      const customError = new Error(errorMessage);
+      (customError as any).response = error.response;
+      throw customError;
+    }
+  };
+
+ 
+  export const EditEmployeeCode = async (payload: { employeeId: string; employeeCode: string; branchId: string; email: string; jobTitle?: string; expiresAt: string; status?: number }) => {
+    try {
+      // Convert expiresAt to ISO string if provided, or null
+      const requestPayload: any = {
+        employeeId: payload.employeeId,
+        employeeCode: payload.employeeCode,
+        branchId: payload.branchId,
+        email: payload.email,
+        jobTitle: payload.jobTitle || null,
+        expiresAt: payload.expiresAt ? new Date(payload.expiresAt).toISOString() : null,
+      };
+      // Only include status if provided
+      if (payload.status !== undefined) {
+        requestPayload.status = payload.status;
+      }
+      const response = await apiClient.put("/api/admin/employees", requestPayload);
+      if (!response || !response.data) {
+        throw new Error("Invalid response from the server");
+      }
+      return response.data;
+    } catch (error: any) {
+      const errorMessage = formatErrorMessage(error, "Failed to edit employee code");
+      const customError = new Error(errorMessage);
+      (customError as any).response = error.response;
+      throw customError;
+    }
+  };
+
+  // Get employee codes with pagination, search, includeExpired, status, and branch filter
+  export const GetEmployeeCodes = async (params: { search?: string; page?: number; pageSize?: number; includeExpired?: boolean; status?: number; branchId?: string } = {}) => {
+    const { search = "", page = 1, pageSize = 20, includeExpired, status, branchId } = params;
+    const query = new URLSearchParams();
+    if (search) query.set("search", search);
+    if (page) query.set("page", String(page));
+    if (pageSize) query.set("pageSize", String(pageSize));
+    if (typeof includeExpired === "boolean") query.set("includeExpired", String(includeExpired));
+    if (typeof status === "number") query.set("status", String(status));
+    if (branchId) query.set("branchId", branchId);
+    try {
+      const response = await apiClient.get(`/api/admin/employees?${query.toString()}`);
+      if (!response || response.data === undefined || response.data === null) {
+        return {
+          page,
+          pageSize,
+          totalItems: 0,
+          items: []
+        };
+      }
+    return response.data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  export const DeleteEmployeeCodeExpired = async () => {
+    try {
+      const response = await apiClient.delete(`/api/admin/employees/expired`);
+      if (!response || !response.data) {
+        throw new Error("Invalid response from the server");
+      }
+      return response.data;
+    } catch (error: any) {
+      const errorMessage = formatErrorMessage(error, "Failed to delete expired employee codes");
+      const customError = new Error(errorMessage);
+      (customError as any).response = error.response;
+      throw customError;
+    }
+  };
+
+export const DeleteEmployeeCode = async (employeeId: string, employeeCode: string) => {
+    try {
+    const response = await apiClient.delete(`/api/admin/employees/${employeeId}/${encodeURIComponent(employeeCode)}`);
+      if (!response || !response.data) {
+        throw new Error("Invalid response from the server");
+      }
+      return response.data;
+    } catch (error: any) {
+      const errorMessage = formatErrorMessage(error, "Failed to delete employee code");
+      const customError = new Error(errorMessage);
+      (customError as any).response = error.response;
+      throw customError;
+    }
+  };
+
+export const GetCategories = async () => {
+  try {
+    const response = await apiClient.get("/api/AdminManage/category/get-all-place-categories");
+    if (!response || response.data === undefined || response.data === null) {
+      return [];
+    }
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const CreateCategory = async (name: string, description: string) => {
+  try {
+    const response = await apiClient.post("/api/AdminManage/category/create-place-category", { name, description });
+    if (!response || !response.data) {
+      throw new Error("Invalid response from the server");
+    }
+    return response.data;
+  } catch (error: any) {
+    const errorMessage = formatErrorMessage(error, "Failed to create category");
+    const customError = new Error(errorMessage);
+    (customError as any).response = error.response;
+    throw customError;
+  }
+};
+export const EditCategory = async (categoryId: number, name: string, description: string) => {
+  try {
+    const response = await apiClient.put("/api/AdminManage/category/update-place-category", { 
+      categoryId, 
+      name, 
+      description 
+    });
+    if (!response || !response.data) {
+      throw new Error("Invalid response from the server");
+    }
+    return response.data;
+  } catch (error: any) {
+    const errorMessage = formatErrorMessage(error, "Failed to edit category");
+    const customError = new Error(errorMessage);
+    (customError as any).response = error.response;
+    throw customError;
+  }
+};
+export const DeleteCategory = async (id: number) => {
+  try {
+    const response = await apiClient.delete(`/api/AdminManage/category/delete-place-category/${id}`);
+    if (!response || !response.data) {
+      throw new Error("Invalid response from the server");
+    }
+    return response.data;
+  } catch (error: any) {
+    const errorMessage = formatErrorMessage(error, "Failed to delete category");
+    const customError = new Error(errorMessage);
+    (customError as any).response = error.response;
+    throw customError;
+  }
+};
+
+export const GetTags = async () => {
+  // Fetch all tags in one go so frontend pagination works correctly
+  // Backend default pageSize is 20, so we explicitly request a large pageSize
+  const page = 1;
+  const pageSize = 1000;
+
+  try {
+    const response = await apiClient.get(
+      `/api/AdminManage/place-tag/get-all-place-tags?page=${page}&pageSize=${pageSize}`
+    );
+
+    if (!response || response.data === undefined || response.data === null) {
+      return {
+        page,
+        pageSize,
+        totalItems: 0,
+        items: [],
+      };
+    }
+
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const CreateTag = async (name: string, description: string) => {
+  try {
+    const response = await apiClient.post("/api/AdminManage/place-tag/create-place-tag", { name, description });
+    if (!response || !response.data) {
+      throw new Error("Invalid response from the server");
+    }
+    return response.data;
+  } catch (error: any) {
+    const errorMessage = formatErrorMessage(error, "Failed to create tag");
+    const customError = new Error(errorMessage);
+    (customError as any).response = error.response;
+    throw customError;
+  }
+};
+
+export const EditTag = async (tagId: number, name: string, description: string) => {
+  try {
+    const response = await apiClient.put("/api/AdminManage/place-tag/update-place-tag", { 
+      tagId, 
+      name, 
+      description 
+    });
+    if (!response || !response.data) {
+      throw new Error("Invalid response from the server");
+    }
+    return response.data;
+  }
+  catch (error: any) {
+    const errorMessage = formatErrorMessage(error, "Failed to edit tag");
+    const customError = new Error(errorMessage);
+    (customError as any).response = error.response;
+    throw customError;
+  }
+};
+export const DeleteTag = async (id: number) => {
+  try {
+    const response = await apiClient.delete(`/api/AdminManage/place-tag/delete-place-tag/${id}`);
+    if (!response || !response.data) {
+      throw new Error("Invalid response from the server");
+    }
+    return response.data;
+  }
+  catch (error: any) {
+    const errorMessage = formatErrorMessage(error, "Failed to delete tag");
+    const customError = new Error(errorMessage);
+    (customError as any).response = error.response;
+    throw customError;
+  }
+};
