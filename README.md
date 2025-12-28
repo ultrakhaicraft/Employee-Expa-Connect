@@ -17,7 +17,11 @@
 
 ## Credit
 -This project is a teamwork effort of four members, these will be included as git username
+
 +vanhungne: Implement AI system, Event Management, Chat system.
+
 +ultrakhaicraft: User Profile Management, Itinerary Management.
+
 +cbq114: Place of Interest Discovery, Reviews Management, Content Moderation.
+
 +bttu2002: UI/UX Design and Implementation
