@@ -15,6 +15,31 @@
 
 -Interact with AI Chatbot
 
+## Setting up the project locally
+-Before starting, make sure to install Visual Studio, Microsoft SQL Server. Installing Visual Studio Code is optional.
+-First, Clone the git source or download the file.
+-Then refer to these section below to setup front end, back end, and database:
+
+### Front end
+1. Open Command Prompt or Terminal application in "Employee-Expat-Connect" file
+2. Enter command "cd BEESRS_Frontend_src" to use the front end source code directory
+3. Install the library package for front end package with "npm-install --legacy-peer-deps"
+4. Open the .env file in the front end source code and fill in the missing values such as api key and secret
+5. When the directory source is BEESRS_Frontend_src, run "npm run dev". This will start the frontend application in local
+
+### Back end
+1. Open "BEESRS.sln" in "BEESRS_Backend_src" file. This should open the visual studio
+2. Open the appsettings.json file and add in the missing value such as api key and secret
+3. Configure the startup project by set the "API" as Single Startup Project
+4. Run the project with Ctrl + F5, This will start the backend server in local
+
+### Creating Database with Migration
+-Before creating the database, make sure the connection string able to connect to your Microsoft SQL server.
+1. Open Package Manager Console by go to "Tools" --> "NuGet Package Manager" --> "Package Manager Console"
+2. Set Default Project as "Infrastructure"
+3. If there isn't any migrations yet, run "Add-Migration InitialCreate"
+4. Once the migration has been created, run "Update-Database" to create the database in your SQL Server
+
 ## Credit
 -This project is a teamwork effort of four members, these will be included as git username
 
