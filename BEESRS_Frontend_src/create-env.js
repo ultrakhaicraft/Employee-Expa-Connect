@@ -13,11 +13,11 @@ VITE_API_BASE_URL=https://localhost:7002
 VITE_API_TIMEOUT=30000
 
 # TrackAsia Maps Configuration
-VITE_TRACKASIA_API_KEY=8f56b61fbc64799470175980824237e7ac
+VITE_TRACKASIA_API_KEY=******
 VITE_TRACKASIA_BASE_URL=https://maps.track-asia.com
 
 # Gemini AI Configuration (Optional)
-VITE_GEMINI_API_KEY=AIzaSyBfTWQa6lPtYQvY_cZvSGGr3G8pXKQVYjM
+VITE_GEMINI_API_KEY=******
 
 # Environment
 VITE_APP_ENV=development
